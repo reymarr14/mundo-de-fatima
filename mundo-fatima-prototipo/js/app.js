@@ -17,15 +17,15 @@ function celebrate(icon,title,text){const c=document.querySelector('#celebration
 document.querySelectorAll('.bottom-nav button').forEach(b=>b.onclick=()=>render(b.dataset.route));
 loadProfile();
 
-// ---------- Perfil real de Fátima (tabla profiles) ----------
+// ---------- Perfil real de Fátima (tabla perfiles) ----------
 async function loadProfile(){
   view.innerHTML = `<div class="card">🌱 Cargando el mundo de Fátima...</div>`;
-  const { data, error } = await supabaseClient.from('profiles').select('*').single();
+  const { data, error } = await supabaseClient.from('perfiles').select('*').single();
   if(error || !data){
     view.innerHTML = `<div class="card">😕 No se pudo cargar el perfil.<br><small>${error?.message||''}</small></div>`;
     return;
   }
-  game = data;
+  game = { id:data.id, name:data.nombre, points:data.puntos, stars:data.estrellas, streak:data.racha, missions_completed:data.misiones_completadas };
   render();
 }
 
